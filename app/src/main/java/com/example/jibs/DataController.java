@@ -30,14 +30,17 @@ public class DataController implements Runnable{
 
         List<HolidayContainer> holidayList = new ArrayList<>();
 
+        //This is filling the holiday list with lists for each day in the month.
         for(int i = 0; i < 31; i++) {
             holidayList.add(new HolidayContainer());
         }
 
+        //This is sorting the holidays into the right spot.
         for(TempHoilday holiday : holidays) {
             holidayList.get(holiday.getDate() -1).addHoliday(holiday);
         }
 
+        //This is setting the list full of the holidays.
         mainActivity.setHolidays(holidayList);
     }
 }

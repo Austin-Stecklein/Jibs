@@ -1,5 +1,6 @@
 package com.example.jibs;
 
+//TEMP CLASS USED ONLY TO TEST UNTIL JON IMPORTS HIS CLASS.
 public class TempHoilday {
     String name;
     int date;
