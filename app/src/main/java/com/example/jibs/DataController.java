@@ -1,16 +1,37 @@
 package com.example.jibs;
 
 import android.app.Activity;
+import android.util.Log;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataController implements Runnable{
+    MonthView monthView;
+    boolean countDown;
     MainActivity mainActivity;
+
+    public DataController(MonthView monthView) {
+        this.monthView = monthView;
+        this.countDown = false;
+    }
+
+    public DataController(MonthView monthView, boolean countDown) {
+        this.monthView = monthView;
+        this.countDown = countDown;
+    }
 
     public DataController(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        this.countDown = true;
     }
+
+    public DataController(MainActivity mainActivity, boolean countDown) {
+        this.mainActivity = mainActivity;
+        this.countDown = countDown;
+    }
+
 
     @Override
     public void run() {
@@ -28,6 +49,18 @@ public class DataController implements Runnable{
         holidays.add(tempHoliday3);
         holidays.add(tempHoliday4);
 
+
+        if(countDown) {
+            //Interface with the save data controller differently.
+            //This is the grab for just count down holidays.
+            Log.i("Info", "I made it here");
+
+        }
+        else {
+            //This is the grab for holidays normally.
+        }
+
+
         List<HolidayContainer> holidayList = new ArrayList<>();
 
         //This is filling the holiday list with lists for each day in the month.
@@ -39,8 +72,14 @@ public class DataController implements Runnable{
         for(TempHoilday holiday : holidays) {
             holidayList.get(holiday.getDate() -1).addHoliday(holiday);
         }
-
         //This is setting the list full of the holidays.
-        mainActivity.setHolidays(holidayList);
+        if(countDown)
+        {
+            mainActivity.setList(holidays);
+        }
+        else {
+            monthView.setHolidays(holidayList);
+        }
+
     }
 }

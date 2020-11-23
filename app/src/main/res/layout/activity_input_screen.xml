@@ -4,41 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".InputScreen">
 
-    <ListView
-        android:id="@+id/Box"
-        android:layout_width="391dp"
-        android:layout_height="563dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
-
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/HolidayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="GotoInputPage"
-        android:text="@string/InputPage"
+        android:text="@string/Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.06999999" />
 
-    <Button
-        android:id="@+id/button2"
+    <EditText
+        android:id="@+id/Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="GotoCalendarPage"
-        android:text="@string/MonthView"
+        android:ems="10"
+        android:inputType="date"
+        android:text="@string/Date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.19" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

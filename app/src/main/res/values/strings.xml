@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">jibs</string>
+    <string name="InputPage">+</string>
+    <string name="MonthView">Calendar</string>
+    <string name="Name">Name</string>
+    <string name="Date">Date</string>
 </resources>
