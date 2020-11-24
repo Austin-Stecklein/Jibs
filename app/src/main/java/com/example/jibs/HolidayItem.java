@@ -25,6 +25,10 @@ public class HolidayItem {
         this.icon = icon;
     }
 
+    public int getDate_day() {
+        return date_day;
+    }
+
     @Override
     public String toString() {
         return "Holiday: " + name + '\n' +

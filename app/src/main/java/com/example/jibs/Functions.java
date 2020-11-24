@@ -28,7 +28,7 @@ public class Functions {
         return url;
     }
 
-    public void getData(URL url) throws IOException {
+    public HolidayItem[] getData(URL url) throws IOException {
         HttpURLConnection urlConnect = (HttpURLConnection) url.openConnection();
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnect.getInputStream()));
@@ -38,12 +38,13 @@ public class Functions {
 
         Gson gson = new GsonBuilder().create();
         HolidayItem[] hList = gson.fromJson(line, HolidayItem[].class);
-        for (HolidayItem holidayItem : hList) {
+        return hList;
+        /*for (HolidayItem holidayItem : hList) {
             System.out.println(holidayItem);
-        }
+        }*/
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
     public void readJson(int month, int day) {
         Gson gson = new Gson();
         try {
@@ -61,5 +62,5 @@ public class Functions {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }
