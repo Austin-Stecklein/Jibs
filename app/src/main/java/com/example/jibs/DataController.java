@@ -56,7 +56,7 @@ public class DataController implements Runnable{
             int day = 0;
             URL url;
 
-            if (day == 0) {
+            /*if (day == 0) {
                 Functions functionMonth = new Functions();
                 try {
                     url = functionMonth.getMonth(apID, country, year, month);
@@ -79,7 +79,7 @@ public class DataController implements Runnable{
 
 
             Functions functionJson = new Functions();
-            functionJson.readJson(month, day);
+            functionJson.readJson(month, day);*/
 
         /*TempHoilday tempHoliday1 = new TempHoilday("Pizza Day", 1);
         TempHoilday tempHoliday2 = new TempHoilday("Pie Day", 2);
