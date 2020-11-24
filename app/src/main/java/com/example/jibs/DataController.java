@@ -58,16 +58,35 @@ public class DataController implements Runnable{
             URL url;
             List<HolidayItem> holidayList;
 
-            if (day == 0) {
+            /*if (day == 0) {*/
                 Functions functionMonth = new Functions();
                 try {
                     url = functionMonth.getMonth(apID, country, year, month);
                     Functions functionUrl = new Functions();
                     holidayList = Arrays.asList(functionUrl.getData(url));
+                    List<HolidayContainer> holidayCList = new ArrayList<>();
+
+                    //This is filling the holiday list with lists for each day in the month.
+                    for(int i = 0; i < 31; i++) {
+                        holidayCList.add(new HolidayContainer());
+                    }
+
+                    //This is sorting the holidays into the right spot.
+                    for(HolidayItem holiday : holidayList) {
+                        holidayCList.get(holiday.getDate_day() -1).addHoliday(holiday);
+                    }
+                    //This is setting the list full of the holidays.
+                    /*if(countDown)
+                    {*/
+                        mainActivity.setList(holidayList);
+                    //}
+                    // else {
+                        /*monthView.setHolidays(holidayCList);*/
+                    /*}*/
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else {
+            /*} else {
                 Functions functionDay = new Functions();
                 try {
                     url = functionDay.getDay(apID, country, year, month, day);
@@ -76,7 +95,7 @@ public class DataController implements Runnable{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
 
 
 // --------- Figure this one out Jon ---------------
@@ -106,25 +125,7 @@ public class DataController implements Runnable{
         }
 
 */
-        List<HolidayContainer> holidayCList = new ArrayList<>();
 
-        //This is filling the holiday list with lists for each day in the month.
-        for(int i = 0; i < 31; i++) {
-            holidayCList.add(new HolidayContainer());
-        }
-
-        //This is sorting the holidays into the right spot.
-        for(HolidayItem holiday : holidayList) {
-            holidayCList.get(holiday.getDate_day() -1).addHoliday(holiday);
-        }
-        //This is setting the list full of the holidays.
-        if(countDown)
-        {
-            mainActivity.setList(holidayList);
-        }
-        else {
-            monthView.setHolidays(holidayCList);
-        }
 
     }
 }
