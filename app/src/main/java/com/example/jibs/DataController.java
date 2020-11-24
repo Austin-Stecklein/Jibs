@@ -3,6 +3,7 @@ package com.example.jibs;
 import android.app.Activity;
 import android.os.Build;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 
 import androidx.annotation.RequiresApi;
@@ -56,7 +57,7 @@ public class DataController implements Runnable{
             // System.out.println("Enter today's date (i.e. 25): ");
             int day = 0;
             URL url;
-            List<HolidayItem> holidayList;
+            final List<HolidayItem> holidayList;
 
             /*if (day == 0) {*/
                 Functions functionMonth = new Functions();
@@ -78,7 +79,14 @@ public class DataController implements Runnable{
                     //This is setting the list full of the holidays.
                     /*if(countDown)
                     {*/
-                        mainActivity.setList(holidayList);
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainActivity.setList(holidayList);
+                        }
+                    });
+
+
                     //}
                     // else {
                         /*monthView.setHolidays(holidayCList);*/
