@@ -1,11 +1,17 @@
 package com.example.jibs;
 
 import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 
 
+import androidx.annotation.RequiresApi;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DataController implements Runnable{
     MonthView monthView;
@@ -33,12 +39,49 @@ public class DataController implements Runnable{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
     //This is where the interface with the user save data class will go. For now I will fill it with
         // some random data.
+            Scanner input = new Scanner(System.in);
 
-        TempHoilday tempHoliday1 = new TempHoilday("Pizza Day", 1);
+            //Variables
+            String apID = "41cd18df10c447b484da94c8c3ed45e1";
+            String country = "US";
+            int year = 2020;
+            // System.out.println("Enter a month as a numeric value (i.e. December as 12): ");
+            int month = 11;
+            // System.out.println("Enter today's date (i.e. 25): ");
+            int day = 0;
+            URL url;
+
+            if (day == 0) {
+                Functions functionMonth = new Functions();
+                try {
+                    url = functionMonth.getMonth(apID, country, year, month);
+                    Functions functionUrl = new Functions();
+                    functionUrl.getData(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Functions functionDay = new Functions();
+                try {
+                    url = functionDay.getDay(apID, country, year, month, day);
+                    Functions functionUrl = new Functions();
+                    functionUrl.getData(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+            Functions functionJson = new Functions();
+            functionJson.readJson(month, day);
+
+        /*TempHoilday tempHoliday1 = new TempHoilday("Pizza Day", 1);
         TempHoilday tempHoliday2 = new TempHoilday("Pie Day", 2);
         TempHoilday tempHoliday3 = new TempHoilday("spaceX Day", 3);
         TempHoilday tempHoliday4 = new TempHoilday("Canada Day", 4);
@@ -79,7 +122,7 @@ public class DataController implements Runnable{
         }
         else {
             monthView.setHolidays(holidayList);
-        }
+        }*/
 
     }
 }
