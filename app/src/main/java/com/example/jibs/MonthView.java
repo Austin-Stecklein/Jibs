@@ -37,7 +37,7 @@ public class MonthView extends AppCompatActivity {
                     }
                 }
                 else {
-                    List<TempHoilday> emptyList = new ArrayList<>();
+                    List<HolidayItem> emptyList = new ArrayList<>();
                     setList(emptyList);
                 }
             }
@@ -50,9 +50,9 @@ public class MonthView extends AppCompatActivity {
     }
 
     //This is used to set the list display
-    public void setList(List<TempHoilday> day) {
+    public void setList(List<HolidayItem> day) {
         //if it is given an empty list it handles it perfectly.
-        ArrayAdapter<TempHoilday> aa = new ArrayAdapter<TempHoilday>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
+        ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
         ListView listView = (ListView) findViewById(R.id.Box);
         listView.setAdapter(aa);
     }
