@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     //This is a class that will hold all of the holidays to display on the count down
     //page
-    List<HolidayContainer> day;
+    List<HolidayItem> day;
     int month;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +35,39 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH) + 1;
 
-        //Starts a new thread to grab data for the month.
-        //THIS WILL BE EXPANDED LATTER TO HANDLE DIFFERENT MONTHS.
+        ListView listView = (ListView) findViewById(R.id.Box);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Id is the index of the list.
+                sendMessage((int) id);
+
+            }
+        });
+
+
 
 
         Thread thread = new Thread(new DataController(this, month));
         thread.start();
     }
 
+    //Used to send to the info page.
+    public void sendMessage(int index) {
+        Intent intent = new Intent(this, HolidayInfo.class);
+        intent.putExtra("Name", day.get(index).getName());
+        intent.putExtra("Description", day.get(index).getDescription());
+        intent.putExtra("Date", day.get(index).getDate());
+        intent.putExtra("Notification", day.get(index).getNotification());
+        startActivity(intent);
 
+    }
 
 
     //This is used to set the list display
     public void setList(List<HolidayItem> day) {
         //if it is given an empty list it handles it perfectly.
+        this.day = day;
         ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
         ListView listView = (ListView) findViewById(R.id.Box);
 

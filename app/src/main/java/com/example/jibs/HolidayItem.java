@@ -28,6 +28,10 @@ public class HolidayItem {
     public int getDate_day() {
         return date_day;
     }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public String getDate() { return date; }
+    public String getNotification() { return notification; }
 
     @Override
     public String toString() {
