@@ -19,121 +19,84 @@ public class DataController implements Runnable{
     MonthView monthView;
     boolean countDown;
     MainActivity mainActivity;
+    int month;
 
-    public DataController(MonthView monthView) {
+    public DataController(MonthView monthView, int month) {
         this.monthView = monthView;
         this.countDown = false;
+        this.month = month;
     }
 
-    public DataController(MonthView monthView, boolean countDown) {
+    public DataController(MonthView monthView, int month ,boolean countDown) {
         this.monthView = monthView;
         this.countDown = countDown;
+        this.month = month;
     }
 
-    public DataController(MainActivity mainActivity) {
+    public DataController(MainActivity mainActivity, int month) {
         this.mainActivity = mainActivity;
         this.countDown = true;
+        this.month = month;
     }
 
-    public DataController(MainActivity mainActivity, boolean countDown) {
+    public DataController(MainActivity mainActivity, int month ,boolean countDown) {
         this.mainActivity = mainActivity;
         this.countDown = countDown;
+        this.month = month;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
-    //This is where the interface with the user save data class will go. For now I will fill it with
-        // some random data.
-            //Scanner input = new Scanner(System.in);
+        //interface for the data.
+        //Variables
+        String apID = "41cd18df10c447b484da94c8c3ed45e1";
+        String country = "US";
+        int year = 2020;
+        int day = 0;
+        URL url;
 
-            //Variables
-            String apID = "41cd18df10c447b484da94c8c3ed45e1";
-            String country = "US";
-            int year = 2020;
-            // System.out.println("Enter a month as a numeric value (i.e. December as 12): ");
-            int month = 11;
-            // System.out.println("Enter today's date (i.e. 25): ");
-            int day = 0;
-            URL url;
-            final List<HolidayItem> holidayList;
+        final List<HolidayItem> holidayList;
 
-            /*if (day == 0) {*/
-                Functions functionMonth = new Functions();
-                try {
-                    url = functionMonth.getMonth(apID, country, year, month);
-                    Functions functionUrl = new Functions();
-                    holidayList = Arrays.asList(functionUrl.getData(url));
-                    List<HolidayContainer> holidayCList = new ArrayList<>();
+        Functions functionMonth = new Functions();
+        try {
+            url = functionMonth.getMonth(apID, country, year, month);
+            Functions functionUrl = new Functions();
+            holidayList = Arrays.asList(functionUrl.getData(url));
+            final List<HolidayContainer> holidayCList = new ArrayList<>();
 
-                    //This is filling the holiday list with lists for each day in the month.
-                    for(int i = 0; i < 31; i++) {
-                        holidayCList.add(new HolidayContainer());
+            //This is filling the holiday list with lists for each day in the month.
+            for(int i = 0; i < 31; i++) {
+                holidayCList.add(new HolidayContainer());
+            }
+
+            //This is sorting the holidays into the right spot.
+            for(HolidayItem holiday : holidayList) {
+                holidayCList.get(holiday.getDate_day() -1).addHoliday(holiday);
+            }
+
+            //This is setting the list full of the holidays.
+            if(countDown)
+            {
+                mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    mainActivity.setList(holidayList);
                     }
-
-                    //This is sorting the holidays into the right spot.
-                    for(HolidayItem holiday : holidayList) {
-                        holidayCList.get(holiday.getDate_day() -1).addHoliday(holiday);
+                });
+            }
+            else {
+                monthView.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        monthView.setHolidays(holidayCList, month);
                     }
-                    //This is setting the list full of the holidays.
-                    /*if(countDown)
-                    {*/
-                    mainActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mainActivity.setList(holidayList);
-                        }
-                    });
+                });
 
-
-                    //}
-                    // else {
-                        /*monthView.setHolidays(holidayCList);*/
-                    /*}*/
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            /*} else {
-                Functions functionDay = new Functions();
-                try {
-                    url = functionDay.getDay(apID, country, year, month, day);
-                    Functions functionUrl = new Functions();
-                    functionUrl.getData(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }*/
-
-
-// --------- Figure this one out Jon ---------------
-            /*Functions functionJson = new Functions();
-            functionJson.readJson(month, day);*/
-
-        /*TempHoilday tempHoliday1 = new TempHoilday("Pizza Day", 1);
-        TempHoilday tempHoliday2 = new TempHoilday("Pie Day", 2);
-        TempHoilday tempHoliday3 = new TempHoilday("spaceX Day", 3);
-        TempHoilday tempHoliday4 = new TempHoilday("Canada Day", 4);
-
-        List<TempHoilday> holidays = new ArrayList<>();
-        holidays.add(tempHoliday1);
-        holidays.add(tempHoliday2);
-        holidays.add(tempHoliday3);
-        holidays.add(tempHoliday4);
-
-
-        if(countDown) {
-            //Interface with the save data controller differently.
-            //This is the grab for just count down holidays.
-            Log.i("Info", "I made it here");
-
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else {
-            //This is the grab for holidays normally.
-        }
-
-*/
-
-
     }
 }

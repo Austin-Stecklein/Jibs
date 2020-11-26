@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /*
@@ -23,19 +24,21 @@ public class MainActivity extends AppCompatActivity {
 
     //This is a class that will hold all of the holidays to display on the count down
     //page
-
+    List<HolidayContainer> day;
+    int month;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Calendar calendar = Calendar.getInstance();
+        month = calendar.get(Calendar.MONTH) + 1;
 
         //Starts a new thread to grab data for the month.
         //THIS WILL BE EXPANDED LATTER TO HANDLE DIFFERENT MONTHS.
 
 
-        Thread thread = new Thread(new DataController(this));
+        Thread thread = new Thread(new DataController(this, month));
         thread.start();
     }
 
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(aa);
     }
+
 
     public void GotoInputPage(View view) {
         Intent intent = new Intent(this, InputScreen.class);
