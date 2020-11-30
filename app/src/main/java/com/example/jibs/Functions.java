@@ -1,20 +1,17 @@
 package com.example.jibs;
 
+import android.content.Context;
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Functions {
 
@@ -44,23 +41,30 @@ public class Functions {
         }*/
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.O)
-    public void readJson(int month, int day) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public HolidayItem[] readJson(Context context, int month) throws IOException {
+        String fileName = "funHolidays.json";
+        String jsonString;
+
+        InputStream inputStream = context.getAssets().open(fileName);
+        int size = inputStream.available();
+        byte[] buffer = new byte[size];
+        inputStream.read(buffer);
+        inputStream.close();
+
+        jsonString = new String(buffer, "UTF-8");
+        /*HolidayItem that = new HolidayItem("Joe");
+        HolidayItem[] hList2 = {that};*/
+
+
         Gson gson = new Gson();
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get("D:\\School\\Fall2020\\CS246_Java\\funHolidays.json"));
-            HolidayItem[] hList = gson.fromJson(reader, HolidayItem[].class);
+            HolidayItem[] hList = gson.fromJson(jsonString, HolidayItem[].class);
+            ArrayList<HolidayItem> hList2 = new ArrayList<HolidayItem>();
             for (HolidayItem holidayItem : hList) {
-                if (holidayItem.date_month == month && day == 0) {
-                    System.out.println(holidayItem);
-                } else if (holidayItem.date_month == month && holidayItem.date_day == day) {
-                    System.out.println(holidayItem);
+                if (holidayItem.date_month == month) {
+                    hList2.add(holidayItem);
                 }
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }*/
+            return hList2.toArray(new HolidayItem[0]);
+    }
 }
