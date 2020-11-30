@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        Thread thread = new Thread(new DataController(this, month));
+        DataController  dataController = new DataControllerFactory().getController(this, month, true);
+        Thread thread = new Thread((Runnable) dataController);
         thread.start();
     }
 
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Date", day.get(index).getDate());
         intent.putExtra("Notification", day.get(index).getNotification());
         startActivity(intent);
-
     }
 
 

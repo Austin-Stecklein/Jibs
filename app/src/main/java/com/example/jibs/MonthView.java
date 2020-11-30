@@ -59,13 +59,15 @@ public class MonthView extends AppCompatActivity {
         currentMonth = calendar.get(Calendar.MONTH) + 1;
 
         //Starts a new thread to grab data for the month.
-        Thread thread = new Thread(new DataController(this, currentMonth));
+        DataController dataController = new DataControllerFactory().getController(this, currentMonth, false);
+        Thread thread = new Thread((Runnable) dataController);
         thread.start();
     }
 
     //This is how we are still able to thread.
     public void callDataController(int month) {
-        Thread thread = new Thread(new DataController(this, month));
+        DataController dataController = new DataControllerFactory().getController(this, month, false);
+        Thread thread = new Thread((Runnable) dataController);
         thread.start();
     }
 
