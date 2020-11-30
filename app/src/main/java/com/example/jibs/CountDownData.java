@@ -40,9 +40,20 @@ public class CountDownData implements DataController, Runnable{
             Functions functionUrl = new Functions();
             Functions functionJson = new Functions();
 
-            holidayList =  new ArrayList<>(Arrays.asList(functionUrl.getData(url)));
-            tempList = new ArrayList<>(Arrays.asList(functionJson.readJson(mainActivity, month))); // Add a filter AUSTIN this line is more important
-            holidayList.addAll(tempList);
+            tempList =  new ArrayList<>(Arrays.asList(functionUrl.getData(url)));
+            holidayList = new ArrayList<>(Arrays.asList(functionJson.readJson(mainActivity, month)));
+            for(HolidayItem tempItem : tempList) {
+                boolean itemInList = false;
+                for(HolidayItem holidayItem : holidayList) {
+                    if(tempItem.name.equals(holidayItem.name)) {
+                        itemInList = true;
+                    }
+                }
+                if(!itemInList) {
+                    holidayList.add(tempItem);
+                }
+            }
+
 
             //This is setting the list full of the holidays.
             mainActivity.runOnUiThread(new Runnable() {

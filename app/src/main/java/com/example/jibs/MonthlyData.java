@@ -38,9 +38,20 @@ public class MonthlyData implements DataController, Runnable {
             Functions functionUrl = new Functions();
             Functions functionJson = new Functions();
 
-            holidayList =  new ArrayList<>(Arrays.asList(functionUrl.getData(url)));
-            tempList = new ArrayList<>(Arrays.asList(functionJson.readJson(monthView, month))); // Add a filter AUSTIN this line is more important
-            holidayList.addAll(tempList);
+            tempList =  new ArrayList<>(Arrays.asList(functionUrl.getData(url)));
+            holidayList = new ArrayList<>(Arrays.asList(functionJson.readJson(monthView, month))); // Add a filter AUSTIN this line is more important
+            for(HolidayItem tempItem : tempList) {
+                boolean itemInList = false;
+                for(HolidayItem holidayItem : holidayList) {
+                    if(tempItem.name.equals(holidayItem.name)) {
+                        itemInList = true;
+                    }
+                }
+                if(!itemInList) {
+                    holidayList.add(tempItem);
+                }
+            }
+
             final List<HolidayContainer> holidayCList = new ArrayList<>();
 
             //This is filling the holiday list with lists for each day in the month.
