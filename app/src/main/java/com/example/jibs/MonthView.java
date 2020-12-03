@@ -3,8 +3,11 @@ package com.example.jibs;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -22,6 +25,7 @@ public class MonthView extends AppCompatActivity {
     // i.e. index 1 is a list of holidays on the first of the month.
     private List<HolidayContainer> holidays = new ArrayList<>();
     private int currentMonth;
+    public int selectedDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class MonthView extends AppCompatActivity {
                     if (!getHolidays().isEmpty()) {
                         if (getHolidays().get(dayOfMonth - 1) != null) {
                             setList(getHolidays().get(dayOfMonth - 1).getHolidays());
+                            selectedDay = dayOfMonth;
                         }
                     } else {
                         List<HolidayItem> emptyList = new ArrayList<>();
@@ -47,9 +52,21 @@ public class MonthView extends AppCompatActivity {
                 }
                 //This is how we are handling the different months.
                 else {
+                    selectedDay = dayOfMonth;
                     callDataController(month);
                     currentMonth = month;
                 }
+            }
+        });
+
+        ListView listView = (ListView) findViewById(R.id.Box);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Id is the index of the list.
+                sendMessage((int) id);
+                //Log.i("Index", Long.toString(id));
+
             }
         });
 
@@ -57,11 +74,22 @@ public class MonthView extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(calendarView.getDate());
         currentMonth = calendar.get(Calendar.MONTH) + 1;
+        selectedDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         //Starts a new thread to grab data for the month.
         DataController dataController = new DataControllerFactory().getController(this, currentMonth, false);
         Thread thread = new Thread((Runnable) dataController);
         thread.start();
+    }
+
+    //Used to send to the info page.
+    public void sendMessage(int index) {
+        Intent intent = new Intent(this, HolidayInfo.class);
+        intent.putExtra("Name", holidays.get(selectedDay - 1 ).getHolidays().get(index).getName());
+        intent.putExtra("Description", holidays.get(selectedDay - 1).getHolidays().get(index).getDescription());
+        intent.putExtra("Date", holidays.get(selectedDay - 1).getHolidays().get(index).getDate());
+        intent.putExtra("Notification", holidays.get(selectedDay - 1).getHolidays().get(index).getNotification());
+        startActivity(intent);
     }
 
     //This is how we are still able to thread.
@@ -85,8 +113,8 @@ public class MonthView extends AppCompatActivity {
     public void setHolidays(List<HolidayContainer> holidays, int month) {
         this.holidays = holidays;
         if (!holidays.isEmpty()) {
-            if (getHolidays().get(month - 1) != null) {
-                setList(getHolidays().get(month - 1).getHolidays());
+            if (getHolidays().get(selectedDay - 1) != null) {
+                setList(getHolidays().get(selectedDay - 1).getHolidays());
             }
         } else {
             List<HolidayItem> emptyList = new ArrayList<>();
