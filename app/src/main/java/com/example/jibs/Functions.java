@@ -36,9 +36,6 @@ public class Functions {
         Gson gson = new GsonBuilder().create();
         HolidayItem[] hList = gson.fromJson(line, HolidayItem[].class);
         return hList;
-        /*for (HolidayItem holidayItem : hList) {
-            System.out.println(holidayItem);
-        }*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -53,9 +50,6 @@ public class Functions {
         inputStream.close();
 
         jsonString = new String(buffer, "UTF-8");
-        /*HolidayItem that = new HolidayItem("Joe");
-        HolidayItem[] hList2 = {that};*/
-
 
         Gson gson = new Gson();
             HolidayItem[] hList = gson.fromJson(jsonString, HolidayItem[].class);

@@ -35,9 +35,7 @@ public class HolidayItem {
 
     @Override
     public String toString() {
-        return "Holiday: " + name + '\n' +
-                date + '\n' +
-                "Celebrated: " + location + '\n' +
-                "About: " + description + '\n';
+        return name + ": " + '\n' +
+                "Celebrated " + location + '\n';
     }
 }
