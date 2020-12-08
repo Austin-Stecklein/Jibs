@@ -24,7 +24,23 @@ public class InfoPageData implements DataController, Runnable{
     @Override
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void run() {
-        new UserSaveData(holidayInfo).deleteItem(holidayItem);
+        int confirm = new UserSaveData(holidayInfo).deleteItem(holidayItem);
+        String message = "";
+        if(confirm == 0) {
+            message = "Saved Data";
+        }
+        else {
+            message = "Save Failed";
+        }
+
+        final String finalMessage = message;
+        holidayInfo.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new Confirmation().onReceive(holidayInfo, finalMessage);
+            }
+        });
+
     }
 
 

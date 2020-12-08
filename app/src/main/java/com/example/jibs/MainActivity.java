@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
     public void setList(List<HolidayItem> day) {
         //if it is given an empty list it handles it perfectly.
         this.day = day;
-        ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
+        //ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
         ListView listView = (ListView) findViewById(R.id.Box);
-
+        FavHolidayAdapter aa = new FavHolidayAdapter(this,R.layout.list_row , (ArrayList<HolidayItem>) day);
         listView.setAdapter(aa);
     }
 
