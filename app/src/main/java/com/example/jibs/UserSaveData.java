@@ -15,34 +15,43 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserSaveData {
 
     private Context context;
-    private final String filename = "userSaveData";
+    private final String filename = "userSaveData.txt";
+
+    public UserSaveData(Context context) {
+        this.context = context;
+    }
 
     public int saveData(HolidayItem holidayItem) {
+
         String data = new Gson().toJson(holidayItem);
+        data += '\n';
         try {
-            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_APPEND);
             fos.write(data.getBytes());
+
             fos.close();
         } catch (FileNotFoundException e) {
+
             return 1;
         } catch (IOException e) {
+
             return 1;
         }
         return 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void getSaveData() {
-        FileInputStream fis = null;
-        try {
-            fis = context.openFileInput(filename);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public List<HolidayItem> getSaveData() throws FileNotFoundException {
+        List<String> strings = new ArrayList<String>();
+        List<HolidayItem> objects = new ArrayList<HolidayItem>();
+        FileInputStream fis =  context.openFileInput(filename);
+
         InputStreamReader inputStreamReader =
                 new InputStreamReader(fis, StandardCharsets.UTF_8);
         StringBuilder stringBuilder = new StringBuilder();
@@ -50,7 +59,9 @@ public class UserSaveData {
         try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
 
             String line = reader.readLine();
+
             while (line != null) {
+                strings.add(line);
                 stringBuilder.append(line).append('\n');
                 line = reader.readLine();
             }
@@ -58,9 +69,15 @@ public class UserSaveData {
             // Error occurred when opening raw file for reading.
         } finally {
             String contents = stringBuilder.toString();
-            Log.i("test", contents);
+
+
         }
 
+        for(String item: strings) {
+
+            objects.add(new Gson().fromJson(item, HolidayItem.class));
+        }
+        return objects;
     }
 
 }
