@@ -11,10 +11,18 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 //This is the activity that is called when you click on an item in the list.
 public class HolidayInfo extends AppCompatActivity {
 
     private HolidayItem holidayItem;
+    public int day;
+    public int month;
+    public int year;
+    public String daystil;
+    public HolidayInfo holidayInfo = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +46,34 @@ public class HolidayInfo extends AppCompatActivity {
         TextView textView2 = (TextView) findViewById(R.id.HolidayDescription);
         Switch simpleSwitch = (Switch) findViewById(R.id.notfications);
 
+
         String[] dates = date.split("/");
+        day = Integer.parseInt(dates[1]);
+        month = Integer.parseInt(dates[0]);
+        year = Integer.parseInt(dates[2]);
 
+        this.holidayItem = new HolidayItem(name, description, "", "", date, year, month, day, notification, "");
 
-        this.holidayItem = new HolidayItem(name, description, "", "", date, Integer.parseInt(dates[2]), Integer.parseInt(dates[0])
-               , Integer.parseInt(dates[1]), notification, "");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Date date1 = new Date(day, month, year);
+                Calendar calendar = Calendar.getInstance();
+                Date date2 = new Date(calendar.get(Calendar.DAY_OF_MONTH + 1), calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.YEAR + 1));
+                daystil = Integer.toString(date2.daysUntil(date1));
+                holidayInfo.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView textView3 = (TextView) findViewById(R.id.CountDown);
+                        String count = daystil + " Days til";
+                        textView3.setText(count);
+                    }
+                });
+
+            }
+        });
+
+        thread.start();
 
 
         textView.setText(name);
