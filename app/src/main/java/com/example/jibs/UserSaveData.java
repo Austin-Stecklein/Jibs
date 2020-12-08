@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,6 +18,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class UserSaveData {
 
@@ -31,6 +33,7 @@ public class UserSaveData {
 
         String data = new Gson().toJson(holidayItem);
         data += '\n';
+
         try {
             FileOutputStream fos = context.openFileOutput(filename, Context.MODE_APPEND);
             fos.write(data.getBytes());
@@ -61,6 +64,7 @@ public class UserSaveData {
             String line = reader.readLine();
 
             while (line != null) {
+
                 strings.add(line);
                 stringBuilder.append(line).append('\n');
                 line = reader.readLine();
@@ -69,15 +73,65 @@ public class UserSaveData {
             // Error occurred when opening raw file for reading.
         } finally {
             String contents = stringBuilder.toString();
-
-
         }
 
         for(String item: strings) {
 
             objects.add(new Gson().fromJson(item, HolidayItem.class));
+
         }
+
         return objects;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void deleteItem(HolidayItem newItem) {
+        List<HolidayItem> holidayItems = new ArrayList<>();
+        try {
+            holidayItems = getSaveData();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        FileOutputStream fose = null;
+        try {
+            String data = "";
+            fose = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fose.write(data.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        List<HolidayItem> it = holidayItems;
+        for(int i = 0; i < it.size(); i++) {
+
+            if(it.get(i).getName().equals(newItem.getName())) {
+                holidayItems.remove(i);
+            }
+        }
+        if(newItem.getNotification().equals("True")) {
+            holidayItems.add(newItem);
+        }
+
+
+        for(HolidayItem holidayItem: holidayItems) {
+            String data = new Gson().toJson(holidayItem);
+            data += '\n';
+
+            try {
+                FileOutputStream fos = context.openFileOutput(filename, Context.MODE_APPEND);
+                fos.write(data.getBytes());
+
+                fos.close();
+            } catch (FileNotFoundException e) {} catch (IOException e) {}
+
+        }
+
+    }
 }
+
+

@@ -59,7 +59,9 @@ public class InputScreen extends AppCompatActivity {
             notifications = "False";
         }
 
-        HolidayItem holidayItem = new HolidayItem(name, description, "", "","" ,year, month, day, notifications, "");
+        String date = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
+
+        HolidayItem holidayItem = new HolidayItem(name, description, "", "", date ,year, month, day, notifications, "");
         new UserSaveData(this).saveData(holidayItem);
 
     }

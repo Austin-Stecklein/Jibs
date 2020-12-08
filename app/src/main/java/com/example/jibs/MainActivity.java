@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DataController  dataController = new DataControllerFactory().getController(this, month, true);
+        Thread thread = new Thread((Runnable) dataController);
+        thread.start();
+    }
+
     //Used to send to the info page.
     public void sendMessage(int index) {
         Intent intent = new Intent(this, HolidayInfo.class);

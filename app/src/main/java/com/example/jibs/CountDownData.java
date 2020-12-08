@@ -3,6 +3,7 @@ package com.example.jibs;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -38,6 +39,7 @@ public class CountDownData implements DataController, Runnable{
         UserSaveData userSaveData = new UserSaveData(mainActivity);
         try {
             tempList = userSaveData.getSaveData();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -33,9 +33,10 @@ public class HolidayItem {
     public String getDate() { return date; }
     public String getNotification() { return notification; }
 
+
     @Override
     public String toString() {
         return name + ": " + '\n' +
-                "Celebrated " + location + '\n';
+                "Date " + date + '\n';
     }
 }
