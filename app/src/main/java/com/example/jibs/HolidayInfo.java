@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,6 +26,12 @@ public class HolidayInfo extends AppCompatActivity {
     public int year;
     public String daystil;
     public HolidayInfo holidayInfo = this;
+    int iconId = R.drawable.add;
+    private String name;
+    private String date;
+    private String description;
+    private String notification;
+    private String activity = "";
 
 
     @Override
@@ -32,11 +39,18 @@ public class HolidayInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_holiday_info);
 
+
         Intent intent = getIntent();
-        String name = intent.getStringExtra("Name");
-        String date = intent.getStringExtra("Date");
-        String description = intent.getStringExtra("Description");
-        String notification = intent.getStringExtra("Notification");
+        name = intent.getStringExtra("Name");
+        date = intent.getStringExtra("Date");
+        description = intent.getStringExtra("Description");
+        notification = intent.getStringExtra("Notification");
+        iconId = intent.getIntExtra("location", R.drawable.add);
+        activity = intent.getStringExtra("activity");
+
+        ImageView imageView = (ImageView) findViewById(R.id.infoIcon);
+        imageView.setImageResource(iconId);
+
 
         boolean notif = false;
 
@@ -55,7 +69,9 @@ public class HolidayInfo extends AppCompatActivity {
         month = Integer.parseInt(dates[0]);
         year = Integer.parseInt(dates[2]);
 
-        this.holidayItem = new HolidayItem(name, description, "", "", date, year, month, day, notification, R.drawable.add);
+        Log.i("test1", Integer.toString(iconId));
+
+        this.holidayItem = new HolidayItem(name, description, "", "", date, year, month, day, notification, Integer.toString(iconId));
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -79,12 +95,29 @@ public class HolidayInfo extends AppCompatActivity {
         thread.start();
 
 
+
         textView.setText(name);
         textView1.setText(date);
         textView2.setText(description);
         simpleSwitch.setChecked(notif);
 
 
+    }
+
+    public void home(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToGrid(View view) {
+        Intent intent = new Intent(this, IconDisplay.class);
+        intent.putExtra("activity", "info");
+        intent.putExtra("Name", name);
+        intent.putExtra("Description", description);
+        intent.putExtra("Date", date);
+        intent.putExtra("Notification", notification);
+        intent.putExtra("location", iconId);
+        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -116,7 +149,7 @@ public class HolidayInfo extends AppCompatActivity {
         }
 
 
-        if(!holidayItem.notification.equals(currentNot)) {
+        if(!holidayItem.notification.equals(currentNot) || activity.equals("IconDisplay")) {
 
             holidayItem.notification = currentNot;
 

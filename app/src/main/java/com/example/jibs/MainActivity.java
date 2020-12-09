@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Description", day.get(index).getDescription());
         intent.putExtra("Date", day.get(index).getDate());
         intent.putExtra("Notification", day.get(index).getNotification());
+        intent.putExtra("location", Integer.parseInt(day.get(index).icon));
+        intent.putExtra("activity", "main");
+
+
         startActivity(intent);
     }
 

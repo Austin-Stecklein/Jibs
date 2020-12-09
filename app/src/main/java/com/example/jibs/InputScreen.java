@@ -39,6 +39,12 @@ public class InputScreen extends AppCompatActivity {
 
     public void goToGrid(View view) {
         Intent intent = new Intent(this, IconDisplay.class);
+        intent.putExtra("activity", "input");
+        startActivity(intent);
+    }
+
+    public void home(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -97,7 +103,7 @@ public class InputScreen extends AppCompatActivity {
 
         String date = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
 
-        HolidayItem holidayItem = new HolidayItem(name, description, "", "", date ,year, month, day, notifications, iconId);
+        HolidayItem holidayItem = new HolidayItem(name, description, "", "", date ,year, month, day, notifications, Integer.toString(iconId));
         int confirm = new UserSaveData(this).saveData(holidayItem);
         if(confirm == 0) {
             new Confirmation().onReceive(this, "Added Holiday");

@@ -86,6 +86,7 @@ public class UserSaveData {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int deleteItem(HolidayItem newItem) {
+
         List<HolidayItem> holidayItems = new ArrayList<>();
         try {
             holidayItems = getSaveData();
@@ -121,6 +122,7 @@ public class UserSaveData {
         for(HolidayItem holidayItem: holidayItems) {
             String data = new Gson().toJson(holidayItem);
             data += '\n';
+            Log.i("test1", data);
 
             try {
                 FileOutputStream fos = context.openFileOutput(filename, Context.MODE_APPEND);
@@ -130,6 +132,7 @@ public class UserSaveData {
             } catch (FileNotFoundException e) { return 1;} catch (IOException e) {return 1;}
 
         }
+
         return 0;
     }
 }

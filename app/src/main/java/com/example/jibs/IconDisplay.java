@@ -12,12 +12,23 @@ import android.widget.GridView;
 public class IconDisplay extends AppCompatActivity {
 
     private Icon[] icons = new Icon[5];
+    private String activity;
+    private String name;
+    private String date;
+    private String description;
+    private String notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_icon_display);
 
+        Intent intent = getIntent();
+        activity = intent.getStringExtra("activity");
+        name = intent.getStringExtra("Name");
+        date = intent.getStringExtra("Date");
+        description = intent.getStringExtra("Description");
+        notification = intent.getStringExtra("Notification");
 
         icons[0] = new Icon(R.drawable.tree);
         icons[1] = new Icon(R.drawable.cups);
@@ -38,7 +49,19 @@ public class IconDisplay extends AppCompatActivity {
     }
 
     public void sendIconBack(int position){
-        Intent intent = new Intent(this, InputScreen.class);
+        Intent intent =  null;
+        if(activity.equals("input")) {
+            intent = new Intent(this, InputScreen.class);
+        }
+        else {
+            intent = new Intent(this, HolidayInfo.class);
+            intent.putExtra("Name", name);
+            intent.putExtra("Description", description);
+            intent.putExtra("Date", date);
+            intent.putExtra("Notification", notification);
+            intent.putExtra("activity", "IconDisplay");
+        }
+
         intent.putExtra("location", icons[position].getLocation());
         startActivity(intent);
     }

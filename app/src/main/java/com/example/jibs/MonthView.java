@@ -89,6 +89,7 @@ public class MonthView extends AppCompatActivity {
         intent.putExtra("Description", holidays.get(selectedDay - 1).getHolidays().get(index).getDescription());
         intent.putExtra("Date", holidays.get(selectedDay - 1).getHolidays().get(index).getDate());
         intent.putExtra("Notification", holidays.get(selectedDay - 1).getHolidays().get(index).getNotification());
+        intent.putExtra("icon", holidays.get(selectedDay - 1).getHolidays().get(index).icon);
         startActivity(intent);
     }
 
