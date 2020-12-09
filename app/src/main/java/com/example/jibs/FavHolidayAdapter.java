@@ -37,7 +37,7 @@ public class FavHolidayAdapter extends ArrayAdapter<HolidayItem> {
 
         TextView txtDes = convertView.findViewById(R.id.txtDes);
 
-        //imageView.setImageResource(getItem(position).getImage());
+        imageView.setImageResource(getItem(position).icon);
 
         txtName.setText(getItem(position).getName());
 

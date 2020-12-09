@@ -55,7 +55,7 @@ public class HolidayInfo extends AppCompatActivity {
         month = Integer.parseInt(dates[0]);
         year = Integer.parseInt(dates[2]);
 
-        this.holidayItem = new HolidayItem(name, description, "", "", date, year, month, day, notification, "");
+        this.holidayItem = new HolidayItem(name, description, "", "", date, year, month, day, notification, R.drawable.add);
 
         Thread thread = new Thread(new Runnable() {
             @Override

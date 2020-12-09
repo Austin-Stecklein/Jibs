@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import java.util.Calendar;
@@ -21,10 +22,19 @@ This is the activity where user can enter in their own holidays.
  */
 public class InputScreen extends AppCompatActivity {
 
+    int iconId = R.drawable.add;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_screen);
+        if(this.getCallingActivity() == new IconDisplay().getComponentName()) {
+            Intent intent = getIntent();
+            iconId = intent.getIntExtra("location", R.drawable.add);
+        }
+
+        ImageView imageView = (ImageView) findViewById(R.id.InputIcon);
+        imageView.setImageResource(iconId);
     }
 
     public void goToGrid(View view) {
@@ -87,7 +97,7 @@ public class InputScreen extends AppCompatActivity {
 
         String date = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year);
 
-        HolidayItem holidayItem = new HolidayItem(name, description, "", "", date ,year, month, day, notifications, "");
+        HolidayItem holidayItem = new HolidayItem(name, description, "", "", date ,year, month, day, notifications, iconId);
         int confirm = new UserSaveData(this).saveData(holidayItem);
         if(confirm == 0) {
             new Confirmation().onReceive(this, "Added Holiday");

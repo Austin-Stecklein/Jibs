@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.38" />
 
     <EditText
         android:id="@+id/month"
@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <EditText
         android:id="@+id/Description"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.45" />
 
     <Switch
         android:id="@+id/enable"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintVertical_bias="0.53" />
 
     <Button
         android:id="@+id/Add"
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <EditText
         android:id="@+id/year"
@@ -93,7 +93,7 @@
         app:layout_constraintHorizontal_bias="0.73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.37" />
 
     <Button
         android:id="@+id/button3"
@@ -105,6 +105,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintVertical_bias="0.61" />
+
+    <ImageView
+        android:id="@+id/InputIcon"
+        android:layout_width="136dp"
+        android:layout_height="147dp"
+        android:clickable="true"
+        android:onClick="goToGrid"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
