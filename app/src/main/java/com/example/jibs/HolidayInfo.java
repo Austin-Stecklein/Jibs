@@ -3,6 +3,9 @@ package com.example.jibs;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,6 +88,17 @@ public class HolidayInfo extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void saveData(View view) {
         Switch simpleSwitch = (Switch) findViewById(R.id.notfications);
         boolean switchState = simpleSwitch.isChecked();
@@ -93,6 +107,9 @@ public class HolidayInfo extends AppCompatActivity {
         String currentNot;
         if(switchState) {
             currentNot = "True";
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(holidayItem.date_year, holidayItem.date_month, holidayItem.date_day);
+            startAlarm(calendar);
         }
         else {
             currentNot = "False";

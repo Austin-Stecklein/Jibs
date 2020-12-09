@@ -3,12 +3,18 @@ package com.example.jibs;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
+
+import java.util.Calendar;
 
 /*
 This is the activity where user can enter in their own holidays.
@@ -19,6 +25,17 @@ public class InputScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_screen);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -54,6 +71,9 @@ public class InputScreen extends AppCompatActivity {
         String notifications;
         if(switchState) {
             notifications = "True";
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day);
+            startAlarm(calendar);
         }
         else {
             notifications = "False";
