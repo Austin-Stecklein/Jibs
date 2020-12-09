@@ -1,5 +1,7 @@
 package com.example.jibs;
 
+import android.view.View;
+
 public class HolidayItem {
     String name;
     String description;
@@ -10,7 +12,8 @@ public class HolidayItem {
     int date_month;
     int date_day;
     String notification;
-    String icon;
+
+    String icon = Integer.toString(R.drawable.add);
 
     public HolidayItem(String name, String description, String location, String type, String date, int date_year, int date_month, int date_day, String notification, String icon) {
         this.name = name;
