@@ -1,6 +1,7 @@
 package com.example.jibs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -91,6 +93,19 @@ public class MainActivity extends AppCompatActivity {
     public void GotoCalendarPage(View view) {
         Intent intent = new Intent(this, MonthView.class);
         startActivity(intent);
+    }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.apply();
+        Toast.makeText(this, "Setting saved!", Toast.LENGTH_SHORT);
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        switchOnOff = sharedPreferences.getBoolean(Switch, false);
     }
 
 
