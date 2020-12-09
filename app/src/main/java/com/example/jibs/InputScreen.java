@@ -27,6 +27,12 @@ public class InputScreen extends AppCompatActivity {
         setContentView(R.layout.activity_input_screen);
     }
 
+    public void goToGrid(View view) {
+        Intent intent = new Intent(this, IconDisplay.class);
+        startActivity(intent);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
