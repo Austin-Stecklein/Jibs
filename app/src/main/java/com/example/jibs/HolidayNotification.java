@@ -31,6 +31,7 @@ public class HolidayNotification extends ContextWrapper {
     }
     public NotificationCompat.Builder getChannelNotification() {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
+                //Set the title of the notification and the description. ie. "Christmas" and "Hope it snows!"
                 .setContentTitle("Upcoming Holiday")
                 .setContentText("It's almost time for the holiday!");
 /*

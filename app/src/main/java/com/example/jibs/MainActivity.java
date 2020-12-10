@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //saveData and loadData store the user's notification settings
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

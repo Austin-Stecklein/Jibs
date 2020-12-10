@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+//This class does not save notification settings which are saved in the main activity
 public class UserSaveData {
 
     private Context context;
