@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,20 +98,6 @@ public class MainActivity extends AppCompatActivity {
     public void GotoCalendarPage(View view) {
         Intent intent = new Intent(this, MonthView.class);
         startActivity(intent);
-    }
-
-    //saveData and loadData store the user's notification settings
-    public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.apply();
-        Toast.makeText(this, "Setting saved!", Toast.LENGTH_SHORT);
-    }
-
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-        switchOnOff = sharedPreferences.getBoolean(Switch, false);
     }
 
 

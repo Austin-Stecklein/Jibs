@@ -7,6 +7,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -135,6 +136,14 @@ public class HolidayInfo extends AppCompatActivity {
     public void saveData(View view) {
         Switch simpleSwitch = (Switch) findViewById(R.id.notfications);
         boolean switchState = simpleSwitch.isChecked();
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("hInfo_Notification" ,switchState);
+        editor.putInt("hInfo_Year", holidayItem.date_year);
+        editor.putInt("hInfo_Month", holidayItem.date_month);
+        editor.putInt("hInfo_Day", holidayItem.date_day);
+        editor.apply();
+
 
 
         String currentNot;
