@@ -85,12 +85,13 @@ public class UserSaveData {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void deleteItem(HolidayItem newItem) {
+    public int deleteItem(HolidayItem newItem) {
+
         List<HolidayItem> holidayItems = new ArrayList<>();
         try {
             holidayItems = getSaveData();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return 1;
         }
 
 
@@ -100,9 +101,9 @@ public class UserSaveData {
             fose = context.openFileOutput(filename, Context.MODE_PRIVATE);
             fose.write(data.getBytes());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return 1;
         } catch (IOException e) {
-            e.printStackTrace();
+            return 1;
         }
 
 
@@ -121,16 +122,18 @@ public class UserSaveData {
         for(HolidayItem holidayItem: holidayItems) {
             String data = new Gson().toJson(holidayItem);
             data += '\n';
+            Log.i("test1", data);
 
             try {
                 FileOutputStream fos = context.openFileOutput(filename, Context.MODE_APPEND);
                 fos.write(data.getBytes());
 
                 fos.close();
-            } catch (FileNotFoundException e) {} catch (IOException e) {}
+            } catch (FileNotFoundException e) { return 1;} catch (IOException e) {return 1;}
 
         }
 
+        return 0;
     }
 }
 

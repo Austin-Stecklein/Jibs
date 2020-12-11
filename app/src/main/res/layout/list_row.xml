@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/image"
-        android:src="@color/black"
+        android:src="#000000"
         android:layout_width="100dp"
         android:layout_height="100dp"
         />

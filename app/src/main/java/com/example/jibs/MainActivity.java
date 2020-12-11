@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Description", day.get(index).getDescription());
         intent.putExtra("Date", day.get(index).getDate());
         intent.putExtra("Notification", day.get(index).getNotification());
+        intent.putExtra("location", Integer.parseInt(day.get(index).icon));
+        intent.putExtra("activity", "main");
+
+
         startActivity(intent);
     }
 
@@ -76,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
     public void setList(List<HolidayItem> day) {
         //if it is given an empty list it handles it perfectly.
         this.day = day;
-        ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
+        //ArrayAdapter<HolidayItem> aa = new ArrayAdapter<HolidayItem>(this.getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, day);
         ListView listView = (ListView) findViewById(R.id.Box);
-
+        FavHolidayAdapter aa = new FavHolidayAdapter(this,R.layout.list_row , (ArrayList<HolidayItem>) day);
         listView.setAdapter(aa);
     }
 
