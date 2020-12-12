@@ -132,6 +132,7 @@ public class HolidayInfo extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
+    //saveData allows the app to remember if
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void saveData(View view) {
         Switch simpleSwitch = (Switch) findViewById(R.id.notfications);
@@ -143,8 +144,6 @@ public class HolidayInfo extends AppCompatActivity {
         editor.putInt("hInfo_Month", holidayItem.date_month);
         editor.putInt("hInfo_Day", holidayItem.date_day);
         editor.apply();
-
-
 
         String currentNot;
         if(switchState) {
