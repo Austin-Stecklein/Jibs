@@ -4,17 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGray"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:src="@drawable/jibs_logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="100dp"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textColor="@color/jibsDarkGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        tools:ignore="MissingConstraints" />
 
     <ListView
         android:id="@+id/Box"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="408dp"
+        android:layout_height="440dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="0.536" />
 
     <Button
         android:id="@+id/button"
@@ -22,6 +38,7 @@
         android:layout_height="wrap_content"
         android:onClick="GotoInputPage"
         android:text="@string/InputPage"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
@@ -35,6 +52,7 @@
         android:layout_height="wrap_content"
         android:onClick="GotoCalendarPage"
         android:text="@string/MonthView"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
