@@ -1,6 +1,5 @@
 package com.example.jibs;
 
-//This class allows the project to utilize notifications
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +10,7 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         HolidayNotification holidayNotification = new HolidayNotification(context);
-        //NotificationCompat.Builder nb = holidayNotification.getChannelNotification();
-        //holidayNotification.getManager().notify(1, nb.build());
+        NotificationCompat.Builder nb = holidayNotification.getChannelNotification();
+        holidayNotification.getManager().notify(1, nb.build());
     }
 }
